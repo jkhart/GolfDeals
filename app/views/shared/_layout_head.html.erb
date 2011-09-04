@@ -1,0 +1,25 @@
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+<title><%= yield(:page_title).presence || SITE_NAME %></title>
+<meta name="keywords" content="<%= yield(:meta_keywords).presence || META_AUTHOR %>">
+<meta name="keywords" content="<%= yield(:meta_keywords).presence || META_KEYWORDS %>">
+<meta name="description" content="<%= yield(:meta_description).presence || META_DESCRIPTION %>">
+<link rel="shortcut icon" href="/favicon.ico">
+<% META_TAGS.each do |key, value| %>
+  <meta name="<%= key %>" content="<%= value %>">
+<% end %>
+
+<%= stylesheet_link_tag "application.css" %>    
+    <%= stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/smoothness/jquery-ui.css" %>
+
+
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<%= javascript_include_tag "application" %>
+
+<%= csrf_meta_tags %>
+
+<%= yield :head %>
+<%= render :partial => "shared/analytics" if Rails.env.production? %>

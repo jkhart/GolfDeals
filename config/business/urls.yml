@@ -1,0 +1,20 @@
+development:
+  scheme: http
+  subdomain:
+  domain: lvh.me
+  port: "3000"
+test:
+  scheme: http
+  subdomain:
+  domain: lvh.me
+  port: "3000"
+staging:
+  scheme: http
+  subdomain: staging
+  domain: APP-NAME
+  port: "80"
+production:
+  scheme: http
+  subdomain: www
+  domain: APP-NAME
+  port: "80"
