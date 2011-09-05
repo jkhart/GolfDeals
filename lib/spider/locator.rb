@@ -6,6 +6,9 @@ module Spider
       {
         "CA" => {
           "San Francisco" => "http://www.golfnow.com/sanfrancisco/tee-times/hot-deals/search"
+        },
+        "PA" => {
+          "Pittsburgh" => "http://www.golfnow.com/pittsburgh/tee-times/hot-deals/search"
         }
       }[state][city]
     end

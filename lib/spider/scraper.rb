@@ -20,8 +20,6 @@ module Spider
         page.search("#up_container span > table tr").each_with_index do |row, index|
           if row.search(".day").present?
             date = row.search(".day").text + Date.today.year.to_s
-          # elsif index > 6
-          #   next
           else
             row.search(".result").each do |result|
               url = "http://www.golfnow.com" + result.search(".time a").first.attr(:href)
