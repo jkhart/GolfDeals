@@ -9,6 +9,9 @@ module Spider
         },
         "PA" => {
           "Pittsburgh" => "http://www.golfnow.com/pittsburgh/tee-times/hot-deals/search"
+        },
+        "DC" => {
+          "Washington" => "http://www.golfnow.com/washingtondc/tee-times/hot-deals/search"
         }
       }[state][city]
     end

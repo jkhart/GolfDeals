@@ -4,4 +4,6 @@ task :find_deals => :environment do
   bug.retrieve_and_disect
   bug = Spider::Bug.new(:city => "Pittsburgh", :state => "PA")
   bug.retrieve_and_disect
+  bug = Spider::Bug.new(:city => "Washington", :state => "DC")
+  bug.retrieve_and_disect
 end
