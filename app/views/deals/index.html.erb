@@ -17,7 +17,7 @@
 <% end %>
 <% if @golf_courses.length > 0 %>
   <div class='map' style='float: left; margin-bottom: 20px;'>
-    <%= gmaps("markers" => { "data" => @golf_courses.collect{ |course| { "lat" => course.latitude.to_s, "lng" => course.longitude.to_s, "title" => course.name } }.to_json }, "map_options" => { "zoom" => 5, "auto_adjust" => true } ) %>
+    <%= gmaps({ "markers" => { "data" => @golf_courses.collect{ |course| { "lat" => course.latitude.to_s, "lng" => course.longitude.to_s, "title" => course.name } }.to_json }, "map_options" => { "zoom" => 5, "auto_adjust" => true } }, false, true) %>
   </div>
 <% else %>
   <div class='map' style='float: left; margin-bottom: 20px; background-color: #eee; height: 400px; width: 800px; border: 1px solid #666; padding-left: 25px;'>
