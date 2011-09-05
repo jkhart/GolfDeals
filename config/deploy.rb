@@ -62,6 +62,7 @@ namespace :deploy do
   end
   desc "Compile asets"
   task :assets do
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} rails generate gmaps4rails:install"
     run "cd #{current_path} && rvm #{rvm_ruby_string} exec rake assets:precompile RAILS_ENV=#{rails_env} --trace";
   end
 end
