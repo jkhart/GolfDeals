@@ -112,19 +112,14 @@ namespace :db do
       password_options = { "to" => (to["password"] ? "-p#{to['password']}" : ""), "from" => (from["password"] ? "-p#{from['password']}" : "") }
       run "mysqldump -u #{from['username']} #{host_options['from']} #{password_options['from']} #{from['database']} --skip-extended-insert --set-charset --no-data > #{shared_path}/databases/#{structure_filename}"
       run "mysqldump -u #{from['username']} #{host_options['from']} #{password_options['from']} #{from['database']} --skip-extended-insert --set-charset --no-create-info > #{shared_path}/databases/#{data_filename}"
-      run "cd #{shared_path}/uploads/; zip -r #{shared_path}/uploads.zip *"
       system("mkdir -p db/backups")
       system("scp -oPort=#{port} #{user}@#{domain}:#{shared_path}/databases/#{structure_filename} db/backups/#{structure_filename}")
       system("scp -oPort=#{port} #{user}@#{domain}:#{shared_path}/databases/#{data_filename} db/backups/#{data_filename}")
-      system("scp -oPort=#{port} #{user}@#{domain}:#{shared_path}/uploads.zip public/uploads.zip")
       run "rm -r #{shared_path}/databases/"
-      run "rm #{shared_path}/uploads.zip"
       system("rake db:drop RAILS_ENV=#{current_env} --trace; rake db:create RAILS_ENV=#{current_env} --trace")
       system("rm -rf public/uploads")
       system("mysql -u #{to['username']} #{host_options['to']} #{password_options['to']} #{to['database']} < db/backups/#{structure_filename}")
       system("mysql -u #{to['username']} #{host_options['to']} #{password_options['to']} #{to['database']} < db/backups/#{data_filename}")
-      system("unzip public/uploads.zip -d public/uploads")
-      system("rm public/uploads.zip")
       system("rake db:migrate RAILS_ENV=#{current_env} --trace")
     else
       puts "if you want to get a database to production, you must pass 'FORCE=true'"
@@ -146,22 +141,14 @@ namespace :db do
       password_options = { "to" => (to["password"] ? "-p#{to['password']}" : ""), "from" => (from["password"] ? "-p#{from['password']}" : "") }
       system "mysqldump -u #{from['username']} #{host_options['from']} #{password_options['from']} #{from['database']} --skip-extended-insert --set-charset --no-data > db/backups/#{structure_filename}"
       system "mysqldump -u #{from['username']} #{host_options['from']} #{password_options['from']} #{from['database']} --skip-extended-insert --set-charset --no-create-info > db/backups/#{data_filename}"
-      system "cd public/uploads/; zip -r uploads.zip *"
-      system "mv public/uploads/uploads.zip public/uploads.zip"
       run "mkdir -p #{shared_path}/databases"
-      run "mkdir -p #{shared_path}/uploads"
-      run "rm -r #{shared_path}/uploads/"
       system "scp -oPort=#{port} db/backups/#{structure_filename} #{user}@#{domain}:#{shared_path}/databases/#{structure_filename}"
       system "scp -oPort=#{port} db/backups/#{data_filename} #{user}@#{domain}:#{shared_path}/databases/#{data_filename}"
-      system "scp -oPort=#{port} public/uploads.zip #{user}@#{domain}:#{shared_path}/uploads.zip"
       run "cd #{current_path} && rake db:drop RAILS_ENV=#{defined?(stage) ? stage.to_s : 'production'} --trace; rake db:create RAILS_ENV=#{defined?(stage) ? stage.to_s : 'production'} --trace"
       run "mysql -u #{to['username']} #{host_options['to']} #{password_options['to']} #{to['database']} < #{shared_path}/databases/#{structure_filename}"
       run "mysql -u #{to['username']} #{host_options['to']} #{password_options['to']} #{to['database']} < #{shared_path}/databases/#{data_filename}"
-      run "unzip #{shared_path}/uploads.zip -d #{shared_path}/uploads"
-      run "rm #{shared_path}/uploads.zip"
       run "cd #{current_path} && rake db:migrate RAILS_ENV=#{defined?(stage) ? stage.to_s : 'production'} --trace"
       run "rm -r #{shared_path}/databases/"
-      system "rm public/uploads.zip"
       system "rm -r db/backups/" if current_env == "production"
     else
       puts "if you want to put your database to production, you must pass 'FORCE=true'"
