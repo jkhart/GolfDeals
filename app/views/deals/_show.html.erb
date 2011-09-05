@@ -1,0 +1,21 @@
+<h3><%= golf_course.name %>
+  <% if golf_course.website_url.present? %>
+    - <%= link_to "Official URL", golf_course.website_url, :target => "blank" %>
+  <% end %>
+</h3>
+<p><%= golf_course.location %></p>
+<% @deals.each do |deal| %>
+  <table style='border: 1px solid #999; padding: 10px; margin: 10px 25px 20px; float: left;'>
+    <tr><td>Date</td><td><%= deal.tee_time.to_date.to_s(:long) %>
+    <tr><td>Time</td><td><%= deal.tee_time.strftime("%I:%M %p") %></td>
+    <tr><td>Cost</td><td><%= number_to_currency deal.cost_per_player %></td></tr>
+    <tr><td>Savings</td><td><%= number_to_percentage deal.percentage_savings, :precision => 0 %></td></tr>
+    <tr><td>Minimum Players</td><td><%= deal.minimum_players %></td></tr>
+    <tr><td>Maximum Players</td><td><%= deal.maximum_players %></td></tr>
+    <tr><td>Number of Holes</td><td><%= deal.number_of_holes.presence || "Unspecified" %></td></tr>
+    <tr><td>Includes Cart?</td><td><%= deal.includes_cart? ? "Yes" : "No" %></td></tr>
+    <tr><td>Includes Practice Balls?</td><td><%= deal.includes_practice_balls? ? "Yes" : "No" %></td></tr>
+    <tr><td>Includes GPS?</td><td><%= deal.includes_gps? ? "Yes" : "No" %></td></tr>
+    <tr><td colspan="2" style='text-align: right'><%= link_to "Purchase", deal.url, :target => "blank" %></td></tr>
+  </table>
+<% end %>

@@ -14,6 +14,8 @@ gem 'therubyracer'
 #gem "meta_where"
 
 gem "mysql2"
+gem 'geocoder'
+gem 'gmaps4rails'
 
 group :development do
   gem "capistrano"

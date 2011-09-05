@@ -1,5 +1,5 @@
-COMPANY_NAME = ""
-SITE_NAME = ""
+COMPANY_NAME = "GolfDeals"
+SITE_NAME = "GolfDeals"
 COMPANY_ADDRESS = {
   "Street" => "",
   "Suite" => "",

@@ -1,24 +1,23 @@
 $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 require 'rvm/capistrano'
-require 'capistrano/ext/multistage'
 
-set :application, APPLICATION_NAME
-set :repository,  GIT_REPOSITORY
+set :application, "golfdeals"
+set :repository, "git@github.com:jkhart/GolfDeals.git"
 
 set :scm, :git
 
-set :stages, %w(staging production)
-set :default_stage, "staging"
-
-
-set :user, "deploy"
+set :user, "jkhart"
 set :use_sudo, false
 set :port, 1492
 set :rvm_type, :user
 
-role :web, "#{application}.com"
-role :app, "#{application}.com"
-role :db,  "#{application}.com", :primary => true
+set :deploy_to, "/home/#{user}/projects/#{application}"
+set :rvm_ruby_string, "1.9.2-p180@golf-now"
+set :domain, "rebreak.it"
+
+role :web, "jkhart.com"
+role :app, "jkhart.com"
+role :db,  "jkhart.com", :primary => true
 
 after "deploy:symlink", "deploy:copy_database_yml"
 after "deploy:symlink", "deploy:copy_setup_load_paths"
