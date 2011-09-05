@@ -26,8 +26,8 @@ after "deploy:symlink", "deploy:assets"
 after "deploy:symlink", "symlink:uploads"
 after "deploy:symlink", "symlink:cache"
 after "deploy:symlink", "symlink:rvmrc"
-#after "deploy:symlink", "deploy:migrate"
-#after "deploy:restart", "deploy:whenever:rebuild"
+after "deploy:symlink", "deploy:migrate"
+after "deploy:restart", "deploy:whenever:rebuild"
 
 
 namespace :deploy do
